@@ -1,29 +1,44 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/DESIFpxz)
-# CS_2024_project
+# CS_2025_project 
+# Student Task Tracker
 
 ## Description
 
-Describe the project in 2-3 sentences (You can use more). 
+**Student Task Tracker** is a simple web application for students to manage their academic tasks.  
+Users can create, edit, and delete tasks, link them to specific subjects and deadlines, and mark their completion status.  
+The app helps students stay organized and never miss important deadlines.
 
 ## Setup
 
-Describe the steps to set up the environment and run the application. This can be a bash script or docker commands.
-
+### Run with Docker
+1. Clone the repository:
 ```
-Your commands
-
+   ```bash
+   git clone https://github.com/Tacitus-SL/student-task-tracker.git
+   cd student-task-tracker
 ```
+2. Build and start the containers:
+```
+docker-compose up --build
+```
+3. The app will be available at:
+http://localhost:5000
+
 
 ## Requirements
 
-Describe technologies, libraries, languages you are using (this can be updated in the future).
+Python 3.11
+Flask
+Docker
+...
 
 ## Features
 
-Describe the main features the application performs.
-
-* Feature 1
-* Feature 2
+* Create, edit, and delete tasks
+* Assign subject, description, and due date
+* Mark task status: “in progress” or “completed”
+* Filter and view tasks by date or subject
+* Simple browser-based client interface
 
 ## Git
 
@@ -31,8 +46,9 @@ Specify which branch will store the latest stable version of the application
 
 ## Success Criteria
 
-Describe the criteria by which the success of the project can be determined
-(this will be updated in the future)
+The project will be considered successful if:
 
-* Criteria 1
-
+* The application runs in Docker and is accessible locally or online.
+* Users can perform CRUD operations (Create, Read, Update, Delete) on tasks.
+* Tests and CI are configured and working.
+* A clear and complete README file is provided.

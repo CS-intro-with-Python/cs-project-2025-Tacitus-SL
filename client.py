@@ -1,14 +1,17 @@
 import requests
+import sys
 
 url = 'http://127.0.0.1:8080/'
+try:
+    response = requests.get(url)
+    print("Status code: ", response.status_code)
+    print("Response: ", response.text)
 
-resp_hello = requests.get(f"{url}/hello")
-print("Hello:", resp_hello.json())
+    if response.status_code != 200:
+        print("Some error occured.")
+        sys.exit(1)
+    print("Everything is fine.")
 
-username = 'Svyat'
-resp_user = requests.get(f"{url}/user/{username}")
-print("USER:", resp_user.json())
-
-params = {'q': 'python'}
-resp_search = requests.get(f"{url}/search", params=params)
-print("SEARCH:", resp_search.json())
+except Exception as e:
+    print("Some error occured.")
+    sys.exit(1)

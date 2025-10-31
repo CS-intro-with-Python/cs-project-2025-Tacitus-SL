@@ -1,0 +1,23 @@
+name: CI Test
+on:
+  push:
+    pull_request:
+jobs:
+  build-test:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout repository
+        run: actions/checkout@v3
+
+      - name: Build docker image
+        run: docker build -d -t student-task-tracker
+
+      - name: Run docker container
+        run: docker run -d -p 8080:8080 --name student-server student-task-tracker
+
+      - name: Install client dependencies
+        run: pip install requests
+
+      - name: Run your client
+        run: python client.py

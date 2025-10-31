@@ -1,21 +1,9 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify
 app = Flask(__name__)
 
-@app.route('/hello')
-def hello():
+@app.route('/')
+def home():
 	return jsonify({"message": 'Hello, world!'})
 
-@app.route('/user/<username>')
-def greeting(username):
-    return jsonify({"message": f"Hello, <username>!"})
-
-@app.route('/search')
-def search():
-    query = request.args.get('q', '')
-    return jsonify({
-        "query": query,
-        "length": len(query),
-    })
-
 if __name__ == '__main__':
-    app.run(port=8080)
+    app.run(host='0.0.0.0', port=8080)

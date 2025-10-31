@@ -11,7 +11,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Build docker image
-        run: docker build -t student-task-tracker
+        run: docker build -t student-task-tracker .
 
       - name: Run docker container
         run: docker run -d -p 8080:8080 --name student-server student-task-tracker

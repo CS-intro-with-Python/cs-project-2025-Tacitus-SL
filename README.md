@@ -52,3 +52,15 @@ The project will be considered successful if:
 * Users can perform CRUD operations (Create, Read, Update, Delete) on tasks.
 * Tests and CI are configured and working.
 * A clear and complete README file is provided.
+
+
+
+## Deployed Application
+The Student Task Tracker is deployed online and can be accessed via the following link:
+
+https://cs-project-2025-tacitus-sl-production.up.railway.app/
+
+This deployment allows you to:
+* Access the app from any browser without installing anything locally.
+* Test all features, including creating, editing, and deleting tasks.
+* Explore the live interface and verify that all functionalities work as intended.

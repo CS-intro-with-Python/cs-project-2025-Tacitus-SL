@@ -21,3 +21,6 @@ jobs:
 
       - name: Run your client
         run: python client.py
+
+      - name: Stop container
+        run: docker stop student-server

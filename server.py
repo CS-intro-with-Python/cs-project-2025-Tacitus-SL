@@ -1,7 +1,7 @@
 from flask import Flask, jsonify
 app = Flask(__name__)
 
-@app.route('/')
+@app.route('/wrong')
 def home():
 	return jsonify({"message": 'Hello, World!'})
 

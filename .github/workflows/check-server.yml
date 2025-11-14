@@ -1,0 +1,21 @@
+name: Check Deployed Server
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  check-server:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check server response
+      run: |
+        RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" https://cs-project-2025-tacitus-sl-production.up.railway.app/)
+        echo "Response code: $RESPONSE"
+        if [ "$RESPONSE" -ne 200 ]; then
+          echo "Server check failed!"
+          exit 1
+        fi

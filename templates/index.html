@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}All Tasks{% endblock %}
+
+{% block content %}
+<h2>All Tasks</h2>
+
+<h3>Sort by:</h3>
+
+<form method="get">
+    <button type="submit" name="sort" value="date"
+        {% if sort == 'date' %}style="font-weight: bold;"{% endif %}>
+        Date
+    </button>
+
+    <button type="submit" name="sort" value="subject"
+        {% if sort == 'subject' %}style="font-weight: bold;"{% endif %}>
+        Subject
+    </button>
+
+    <button type="submit" name="sort" value="status"
+        {% if sort == 'status' %}style="font-weight: bold;"{% endif %}>
+        Status
+    </button>
+</form>
+
+<br>
+<a href="{{ url_for('add_task') }}">➕ Add New Task</a>
+
+{% if tasks %}
+<ul>
+    {% for t in tasks %}
+        <li style="{% if t.overdue %}color: red; font-weight: bold;{% endif %}">
+            {% if t.overdue %}&#9888; {% endif %}
+            <strong>{{ t.subject }}</strong> — {{ t.description }} <br>
+            Due: {{ t.due_date | format_date }} <br>
+            Status: <b>{{ t.status }}</b> <br>
+
+            <a href="{{ url_for('edit_task', task_id=t.id) }}">Edit</a> |
+
+            {% if t.status != "completed" %}
+            <a href="{{ url_for('complete_task', task_id=t.id) }}">Mark Completed</a> |
+            {% endif %}
+
+            <a href="{{ url_for('delete_task', task_id=t.id) }}">Delete</a>
+            <hr>
+        </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>No tasks yet.</p>
+{% endif %}
+
+{% endblock %}

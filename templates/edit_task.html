@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Task{% endblock %}
+
+{% block content %}
+<h2>Edit Task</h2>
+
+<form method="post">
+    Subject:<br>
+    <input name="subject" value="{{ task.subject }}" required><br><br>
+
+    Description:<br>
+    <input name="description" value="{{ task.description }}" required><br><br>
+
+    Due date:<br>
+    <input type="date" name="due_date" value="{{ task.due_date }}" required><br><br>
+
+    Status:<br>
+    <select name="status">
+        <option value="in progress" {% if task.status == 'in progress' %}selected{% endif %}>In Progress</option>
+        <option value="completed" {% if task.status == 'completed' %}selected{% endif %}>Completed</option>
+    </select>
+    <br><br>
+
+    <button type="submit">Save</button>
+</form>
+
+<a href="{{ url_for('home') }}">Back</a>
+
+{% endblock %}

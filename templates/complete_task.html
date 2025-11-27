@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Complete Task{% endblock %}
+
+{% block content %}
+<h2>Mark Task as Completed</h2>
+
+<p>Do you want to mark this task as completed?</p>
+
+<div id="summary">
+    <strong>{{ task.subject }}</strong><br>
+    {{ task.description }}<br>
+    Due: {{ task.due_date }}<br>
+    Current status: {{ task.status }}
+</div>
+
+<br>
+
+<form method="post">
+    <button type="submit">Yes, mark completed</button>
+</form>
+
+<br>
+<a href="{{ url_for('home') }}">Cancel</a>
+
+{% endblock %}

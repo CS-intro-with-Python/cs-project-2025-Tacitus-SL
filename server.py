@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, abort
-from datetime import datetime
+from datetime import datetime, date
 
 app = Flask(__name__)
 
@@ -31,9 +31,15 @@ def home():
     filtered = tasks.copy()
 
     if status == "in-progress":
-        filtered = [t for t in tasks if t.status == "in progress"]
+        filtered = []
+        for t in tasks:
+            if t.status == "in progress":
+                filtered.append(t)
     elif status == "completed":
-        filtered = [t for t in tasks if t.status == "completed"]
+        filtered = []
+        for t in tasks:
+            if t.status == "completed":
+                filtered.append(t)
     if sort == "date":
         filtered.sort(key=lambda t: t.due_date)
     elif sort == "subject":
@@ -41,6 +47,12 @@ def home():
     elif sort == "status":
         order = {"in progress": 0, "completed": 1}
         filtered.sort(key=lambda t: order.get(t.status, 99))
+
+    today = date.today()
+    for t in filtered:
+	    t.due_date_obj = datetime.strptime(t.due_date, "%Y-%m-%d").date()
+	    t.overdue = t.due_date_obj < today and t.status != "completed"
+	    t.is_due_today = t.due_date_obj == today and t.status != "completed"
 
     return render_template("index.html", tasks=filtered, status=status, sort=sort)
 

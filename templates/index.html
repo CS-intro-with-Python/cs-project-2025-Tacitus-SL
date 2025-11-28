@@ -7,46 +7,69 @@
 
 <h3>Sort by:</h3>
 
-<form method="get">
+<form method="get" class="mb-3">
     <button type="submit" name="sort" value="date"
-        {% if sort == 'date' %}style="font-weight: bold;"{% endif %}>
+            class="btn btn-outline-primary btn-sm {% if sort == 'date' %}active{% endif %}">
         Date
     </button>
 
     <button type="submit" name="sort" value="subject"
-        {% if sort == 'subject' %}style="font-weight: bold;"{% endif %}>
+            class="btn btn-outline-primary btn-sm {% if sort == 'subject' %}active{% endif %}">
         Subject
     </button>
 
     <button type="submit" name="sort" value="status"
-        {% if sort == 'status' %}style="font-weight: bold;"{% endif %}>
+        class="btn btn-outline-primary btn-sm {% if sort == 'status' %}active{% endif %}">
         Status
     </button>
 </form>
 
-<br>
-<a href="{{ url_for('add_task') }}">➕ Add New Task</a>
+<a href="{{ url_for('add_task') }}" class="btn btn-success mb-3">➕ Add New Task</a>
 
 {% if tasks %}
-<ul>
-    {% for t in tasks %}
-        <li style="{% if t.overdue %}color: red; font-weight: bold;{% endif %}">
-            {% if t.overdue %}&#9888; {% endif %}
-            <strong>{{ t.subject }}</strong> — {{ t.description }} <br>
-            Due: {{ t.due_date | format_date }} <br>
-            Status: <b>{{ t.status }}</b> <br>
-
-            <a href="{{ url_for('edit_task', task_id=t.id) }}">Edit</a> |
-
-            {% if t.status != "completed" %}
-            <a href="{{ url_for('complete_task', task_id=t.id) }}">Mark Completed</a> |
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Subject</th>
+            <th>Description</th>
+            <th>Due Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for t in tasks %}
+         <tr class="
+            {% if t.status == 'completed' %}table-secondary
+            {% elif t.overdue %}table-danger
+            {% elif t.is_due_today %}table-warning
             {% endif %}
-
-            <a href="{{ url_for('delete_task', task_id=t.id) }}">Delete</a>
-            <hr>
-        </li>
-    {% endfor %}
-</ul>
+        ">
+            <th scope="row">{{ t.id }}</th>
+            <td>{% if t.overdue %}⚠️{% elif t.is_due_today %}⏰{% endif %}{{ t.subject }}</td>
+            <td>{{ t.description }}</td>
+            <td>{{ t.due_date | format_date }}</td>
+            <td>
+                {% if t.status == 'completed' %}
+                    <span class="badge bg-secondary">Completed</span>
+                {% elif t.overdue %}
+                    <span class="badge bg-danger">Overdue</span>
+                {% else %}
+                    <span class="badge bg-primary">In progress</span>
+                {% endif %}
+            </td>
+            <td>
+                <a href="{{ url_for('edit_task', task_id=t.id) }}" class="btn btn-warning btn-sm">Edit</a>
+                {% if t.status != "completed" %}
+                <a href="{{ url_for('complete_task', task_id=t.id) }}" class="btn btn-success btn-sm">Mark Completed</a>
+                {% endif %}
+                <a href="{{ url_for('delete_task', task_id=t.id) }}" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% else %}
 <p>No tasks yet.</p>
 {% endif %}

@@ -3,21 +3,25 @@
 {% block title %}Add Task{% endblock %}
 
 {% block content %}
-<h2>Add Task</h2>
+<h2 class="mb-4">Add Task</h2>
 
 <form method="post">
-    Subject:<br>
-    <input name="subject" required><br><br>
+    <div class="mb-3">
+        <label for="subject" class="form-label">Subject</label>
+        <input type="text" class="form-control" id="subject" name="subject" required placeholder="Task title">
+    </div>
 
-    Description:<br>
-    <input name="description" required><br><br>
+    <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea class="form-control" id="description" name="description" rows="3" required placeholder="Task details"></textarea>
+    </div>
 
-    Due date:<br>
-    <input type="date" name="due_date" required><br><br>
+    <div class="mb-3">
+        <label for="due_date" class="form-label">Due Date</label>
+        <input type="date" class="form-control" id="due_date" name="due_date" required>
+    </div>
 
-    <button type="submit">Create Task</button>
+    <button type="submit" class="btn btn-primary">Create Task</button>
+    <a href="{{ url_for('home') }}" class="btn btn-secondary ms-2">Back</a>
 </form>
-
-<a href="{{ url_for('home') }}">Back</a>
-
 {% endblock %}

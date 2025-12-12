@@ -50,9 +50,9 @@ def home():
 
     today = date.today()
     for t in filtered:
-	    t.due_date_obj = datetime.strptime(t.due_date, "%Y-%m-%d").date()
-	    t.overdue = t.due_date_obj < today and t.status != "completed"
-	    t.is_due_today = t.due_date_obj == today and t.status != "completed"
+        t.due_date_obj = datetime.strptime(t.due_date, "%Y-%m-%d").date()
+        t.overdue = t.due_date_obj < today and t.status != "completed"
+        t.is_due_today = t.due_date_obj == today and t.status != "completed"
 
     return render_template("index.html", tasks=filtered, status=status, sort=sort)
 

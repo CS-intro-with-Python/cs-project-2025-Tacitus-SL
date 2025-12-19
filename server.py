@@ -34,7 +34,7 @@ def home():
     status = request.args.get("status", "all")
     sort = request.args.get("sort", "none")
 
-    tasks = Task.query.all()
+    tasks = db.session.query(Task).all()
     filtered = tasks.copy()
 
     if status == "in-progress":
@@ -61,7 +61,15 @@ def home():
 @app.route("/task/add", methods=["GET", "POST"])
 def add_task():
     if request.method == "POST":
-        due_date_obj = datetime.strptime(request.form["due_date"], "%Y-%m-%d").date()
+        try:
+            due_date_obj = datetime.strptime(request.form["due_date"], "%Y-%m-%d").date()
+        except ValueError:
+            return "Invalid date format", 400
+
+        subject = request.form.get("subject", "").strip()
+        if not subject:
+            return "Subject is required", 400
+
         task = Task(
             subject=request.form["subject"],
             description=request.form["description"],
@@ -75,7 +83,9 @@ def add_task():
 
 @app.route("/task/<int:task_id>/edit", methods=["GET", "POST"])
 def edit_task(task_id):
-    task = Task.query.get_or_404(task_id)
+    task = db.session.get(Task, task_id)
+    if not task:
+        abort(404)
 
     if request.method == "POST":
         task.subject = request.form["subject"]
@@ -89,7 +99,9 @@ def edit_task(task_id):
 
 @app.route("/task/<int:task_id>/delete", methods=["GET", "POST"])
 def delete_task(task_id):
-    task = Task.query.get_or_404(task_id)
+    task = db.session.get(Task, task_id)
+    if not task:
+        abort(404)
 
     if request.method == "POST":
         db.session.delete(task)
@@ -100,7 +112,9 @@ def delete_task(task_id):
 
 @app.route("/task/<int:task_id>/complete", methods=["GET", "POST"])
 def complete_task(task_id):
-    task = Task.query.get_or_404(task_id)
+    task = db.session.get(Task, task_id)
+    if not task:
+        abort(404)
     task.status = "completed"
     db.session.commit()
     return redirect(url_for("home"))

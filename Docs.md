@@ -1,4 +1,4 @@
-# API & Page Documentation
+    # API & Page Documentation
 
 This document describes all routes (endpoints) of the **Student Task Tracker** application.  
 For each route you will find:

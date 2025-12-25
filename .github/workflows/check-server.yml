@@ -12,10 +12,18 @@ jobs:
 
     steps:
     - name: Check server response
-      run: |
-        RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" https://cs-project-2025-tacitus-sl-production.up.railway.app/)
+      run: |        
+        URL="https://cs-project-2025-tacitus-sl-production.up.railway.app/"
+        echo "Checking URL: $URL"
+        
+        RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" $URL)
+        
         echo "Response code: $RESPONSE"
-        if [ "$RESPONSE" -ne 200 ]; then
-          echo "Server check failed!"
+        
+        if [ "$RESPONSE" -eq 200 ]; then
+          echo "Server is up and running!"
+          exit 0
+        else
+          echo "Server check failed! Expected 200, got $RESPONSE"
           exit 1
         fi

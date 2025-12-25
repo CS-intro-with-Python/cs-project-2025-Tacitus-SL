@@ -1,7 +1,7 @@
 name: CI Test
 on:
   push:
-    pull_request:
+  pull_request:
 jobs:
   build-test:
     runs-on: ubuntu-22.04
@@ -10,16 +10,24 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
       - name: Build docker image
         run: docker build -t student-task-tracker .
 
       - name: Run docker container
         run: docker run -d -p 8080:8080 --name student-server student-task-tracker
 
+      - name: Wait for server to start
+        run: sleep 10
+
       - name: Install client dependencies
         run: pip install requests
 
-      - name: Run your client
+      - name: Run healthcheck client
         run: python client.py
 
       - name: Stop container

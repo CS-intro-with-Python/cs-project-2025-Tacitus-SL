@@ -5,6 +5,12 @@
 {% block content %}
 <h2 class="mb-4">Add Task</h2>
 
+{% if error %}
+<div class="alert alert-danger" role="alert">
+    {{ error }}
+</div>
+{% endif %}
+
 <form method="post">
     <div class="mb-3">
         <label for="subject" class="form-label">Subject</label>
@@ -18,7 +24,7 @@
 
     <div class="mb-3">
         <label for="due_date" class="form-label">Due Date</label>
-        <input type="date" class="form-control" id="due_date" name="due_date" required>
+        <input type="date" class="form-control" id="due_date" name="due_date" required min="2025-01-01">
     </div>
 
     <button type="submit" class="btn btn-primary">Create Task</button>

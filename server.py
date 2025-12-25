@@ -61,18 +61,36 @@ def home():
 @app.route("/task/add", methods=["GET", "POST"])
 def add_task():
     if request.method == "POST":
-        try:
-            due_date_obj = datetime.strptime(request.form["due_date"], "%Y-%m-%d").date()
-        except ValueError:
-            return "Invalid date format", 400
-
         subject = request.form.get("subject", "").strip()
+        description = request.form.get("description", "")
+        due_date_str = request.form.get("due_date", "")
+
+        error = None
+        due_date_obj = None
+
         if not subject:
-            return "Subject is required", 400
+            error = "Subject is required."
+        else:
+            try:
+                due_date_obj = datetime.strptime(due_date_str, "%Y-%m-%d").date()
+
+                if due_date_obj.year < 2025:
+                    error = "Date must be starting from 2025"
+            except ValueError:
+                error = "Invalid date format."
+
+        if error:
+            return render_template(
+                "add_task.html",
+                error=error,
+                subject=subject,
+                description=description,
+                due_date=due_date_str
+            )
 
         task = Task(
-            subject=request.form["subject"],
-            description=request.form["description"],
+            subject=subject,
+            description=description,
             due_date=due_date_obj,
         )
         db.session.add(task)
@@ -87,14 +105,38 @@ def edit_task(task_id):
     if not task:
         abort(404)
 
+    subject = task.subject
+    description = task.description
+    due_date_str = task.due_date.strftime("%Y-%m-%d")
+    status = task.status
+    error = None
+
     if request.method == "POST":
-        task.subject = request.form["subject"]
-        task.description = request.form["description"]
-        task.due_date = datetime.strptime(request.form["due_date"], "%Y-%m-%d").date()
-        task.status = request.form["status"]
-        db.session.commit()
-        return redirect(url_for("home"))
-    return render_template("edit_task.html", task=task)
+        subject = request.form.get("subject", "").strip()
+        description = request.form.get("description", "")
+        due_date_str = request.form.get("due_date", "")
+        status = request.form.get("status")
+
+        due_date_obj = None
+        if not subject:
+            error = "Subject is required"
+        else:
+            try:
+                due_date_obj = datetime.strptime(due_date_str, "%Y-%m-%d").date()
+                if due_date_obj.year < 2025:
+                    error = "Date must be starting from 2025"
+            except ValueError:
+                error = "Invalid date format"
+
+        if not error:
+            task.subject = subject
+            task.description = description
+            task.due_date = due_date_obj
+            task.status = status
+            db.session.commit()
+            return redirect(url_for("home"))
+
+    return render_template("edit_task.html", task=task, error=error, subject=subject, description=description, due_date=due_date_str, status=status)
 
 
 @app.route("/task/<int:task_id>/delete", methods=["GET", "POST"])

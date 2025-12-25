@@ -5,6 +5,12 @@
 {% block content %}
 <h2 class="mb-4">Edit Task</h2>
 
+{% if error %}
+<div class="alert alert-danger" role="alert">
+    {{ error }}
+</div>
+{% endif %}
+
 <form method="post">
     <div class="mb-3">
         <label for="subject" class="form-label">Subject</label>

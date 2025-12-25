@@ -115,9 +115,12 @@ def complete_task(task_id):
     task = db.session.get(Task, task_id)
     if not task:
         abort(404)
-    task.status = "completed"
-    db.session.commit()
-    return redirect(url_for("home"))
+
+    if request.method == "POST":
+        task.status = "completed"
+        db.session.commit()
+        return redirect(url_for("home"))
+    return render_template("complete_task.html", task=task)
 
 @app.template_filter('format_date')
 def format_date(value):

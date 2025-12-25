@@ -14,7 +14,8 @@ The app helps students stay organized and ensures they never miss important dead
 - Assign subject, description, and due date  
 - Mark task status as “in progress” or “completed”  
 - Filter and view tasks by date or subject  
-- Simple browser-based client interface  
+- Simple browser-based interface
+- Data storage using SQLite
 
 ## Requirements
 
@@ -24,24 +25,37 @@ The app helps students stay organized and ensures they never miss important dead
 
 ## Setup
 
-### Run Locally with Docker
-
 1. Clone the repository:  
 ```bash
-git clone https://github.com/Tacitus-SL/student-task-tracker.git
-cd student-task-tracker
+git clone https://github.com/CS-intro-with-Python/cs-project-2025-Tacitus-SL
+cd cs-project-2025-Tacitus-SL
 ```
 
-2. Build and start the containers:
+2. Create a virtual environment and install dependencies:
+```
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+3. Build and start the container:
 ```
 docker-compose up --build
 ```
-3. The app will be available at:
+
+4. Start the server:
+```
+python3 server.py
+```
+
+5. The app will be available at:
 http://localhost:5000
 
-## Git
-
-The main branch stores the latest stable version of the application.
+## Testing
+Run unit tests with pytest:
+```
+pytest unit_tests.py
+```
 
 ## Success Criteria
 

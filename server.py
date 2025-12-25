@@ -123,8 +123,8 @@ def edit_task(task_id):
         else:
             try:
                 due_date_obj = datetime.strptime(due_date_str, "%Y-%m-%d").date()
-                if due_date_obj.year < 2025:
-                    error = "Date must be starting from 2025"
+                if due_date_obj.year < 2025 or due_date_obj.year > 2100:
+                    error = "Date must be between 2025 and 2100"
             except ValueError:
                 error = "Invalid date format"
 

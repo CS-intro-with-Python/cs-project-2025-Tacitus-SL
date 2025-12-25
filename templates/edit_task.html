@@ -14,24 +14,24 @@
 <form method="post">
     <div class="mb-3">
         <label for="subject" class="form-label">Subject</label>
-        <input type="text" class="form-control" id="subject" name="subject" value="{{ task.subject }}" required>
+        <input type="text" class="form-control" id="subject" name="subject" value="{{ subject }}" required>
     </div>
 
     <div class="mb-3">
         <label for="description" class="form-label">Description</label>
-        <textarea class="form-control" id="description" name="description" rows="3" required>{{ task.description }}</textarea>
+        <textarea class="form-control" id="description" name="description" rows="3" required>{{ description }}</textarea>
     </div>
 
     <div class="mb-3">
         <label for="due_date" class="form-label">Due Date</label>
-        <input type="date" class="form-control" id="due_date" name="due_date" value="{{ task.due_date }}" required>
+        <input type="date" class="form-control" id="due_date" name="due_date" value="{{ due_date }}" min="2025-01-01" max="2100-12-31" required>
     </div>
 
     <div class="mb-3">
         <label for="status" class="form-label">Status</label>
         <select class="form-select" id="status" name="status">
-            <option value="in progress" {% if task.status == 'in progress' %}selected{% endif %}>In Progress</option>
-            <option value="completed" {% if task.status == 'completed' %}selected{% endif %}>Completed</option>
+            <option value="in progress" {% if status == 'in progress' %}selected{% endif %}>In Progress</option>
+            <option value="completed" {% if status == 'completed' %}selected{% endif %}>Completed</option>
         </select>
     </div>
 

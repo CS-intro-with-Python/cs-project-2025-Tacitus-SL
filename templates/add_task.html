@@ -14,17 +14,17 @@
 <form method="post">
     <div class="mb-3">
         <label for="subject" class="form-label">Subject</label>
-        <input type="text" class="form-control" id="subject" name="subject" required placeholder="Task title">
+        <input type="text" class="form-control" id="subject" name="subject" required placeholder="Task title" value="{{ subject or '' }}">
     </div>
 
     <div class="mb-3">
         <label for="description" class="form-label">Description</label>
-        <textarea class="form-control" id="description" name="description" rows="3" required placeholder="Task details"></textarea>
+        <textarea class="form-control" id="description" name="description" rows="3" required placeholder="Task details">{{ description or '' }}</textarea>
     </div>
 
     <div class="mb-3">
         <label for="due_date" class="form-label">Due Date</label>
-        <input type="date" class="form-control" id="due_date" name="due_date" required min="2025-01-01" max="2100-12-31">
+        <input type="date" class="form-control" id="due_date" name="due_date" required min="2025-01-01" max="2100-12-31" value="{{ due_date or '' }}">
     </div>
 
     <button type="submit" class="btn btn-primary">Create Task</button>

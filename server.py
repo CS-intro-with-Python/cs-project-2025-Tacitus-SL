@@ -1,12 +1,22 @@
 from flask import Flask, render_template, request, redirect, url_for, abort
 from flask_sqlalchemy import SQLAlchemy
+from log_config import setup_logging
 from datetime import datetime, date
 
+setup_logging()
 app = Flask(__name__)
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///tasks.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
+
+@app.before_request
+def log_request_info():
+    app.logger.info(
+        f"Method: {request.method} | "
+        f"Path: {request.path} | "
+        f"IP: {request.remote_addr}"
+    )
 
 class Task(db.Model):
     __tablename__ = "tasks"

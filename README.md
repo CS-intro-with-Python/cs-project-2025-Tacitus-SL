@@ -49,7 +49,7 @@ python3 server.py
 ```
 
 5. The app will be available at:
-http://localhost:5000
+http://localhost:8080
 
 ## Testing
 Run unit tests with pytest:
